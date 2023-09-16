@@ -1,0 +1,17 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+
+RWStructuredBuffer<int> numbers;
+int loops;
+
+[numthreads(64,1,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    int value = 0;
+    for (int x = 0; x < loops; x++)
+    {
+        value += sqrt(numbers[id.x]) * cos(numbers[id.x]) / log(numbers[id.x]);
+    }
+    numbers[id.x] = value;
+}
