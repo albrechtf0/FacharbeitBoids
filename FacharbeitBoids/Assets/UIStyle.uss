@@ -1,0 +1,10 @@
+.title {
+    align-self: center;
+    width: auto;
+    font-size: 30px;
+    -unity-text-align: middle-center;
+}
+
+.headline {
+    font-size: 20px;
+}

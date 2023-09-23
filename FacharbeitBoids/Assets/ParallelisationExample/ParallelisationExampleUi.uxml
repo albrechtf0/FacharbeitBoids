@@ -1,0 +1,30 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UIStyle.uss?fileID=7433441132597879392&amp;guid=562547de5e4d6824ea4447c775f46f6e&amp;type=3#UIStyle" />
+    <ui:VisualElement name="Background" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.61);">
+        <ui:Label tabindex="-1" text="Parallelisierungsbeispiel" display-tooltip-when-elided="true" name="Title" class="title" />
+        <ui:Foldout text="Einstellungen" name="SettingsFoldout" value="true">
+            <ui:UnsignedIntegerField label="Anzahl" value="100000" name="AmountInput" />
+            <ui:UnsignedIntegerField label="Wiederholungen" value="1000" name="AmountInput" />
+        </ui:Foldout>
+        <ui:GroupBox text="Ausführen" name="RunBox" style="align-items: stretch;">
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start;">
+                <ui:Button text="Singelthreaded" display-tooltip-when-elided="true" name="RunSinglethreaded" />
+                <ui:Label tabindex="-1" text="Letzte Laufzeit: " display-tooltip-when-elided="true" name="LastRuntime" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start;">
+                <ui:Button text="Multiprocessed" display-tooltip-when-elided="true" name="RunMultiProcessed" style="font-size: 15px;" />
+                <ui:Label tabindex="-1" text="Letzte Laufzeit: " display-tooltip-when-elided="true" name="LastRuntime" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
+                <ui:Button text="Shader" display-tooltip-when-elided="true" name="RunShader" style="font-size: 15px;" />
+                <ui:Label tabindex="-1" text="Letzte Laufzeit: " display-tooltip-when-elided="true" name="LastRuntime" />
+            </ui:VisualElement>
+        </ui:GroupBox>
+        <ui:VisualElement name="Benchmark" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); display: flex; visibility: visible; align-items: stretch;">
+            <ui:Label tabindex="-1" text="Benchmark" display-tooltip-when-elided="true" name="BenchmarkTitle" class="headline" />
+            <ui:UnsignedIntegerField label="Durchläufe" value="1" name="RunsInput" />
+            <ui:Button text="Benchmark starten" display-tooltip-when-elided="true" name="RunBechmarkButton" style="white-space: nowrap;" />
+            <ui:ProgressBar value="22" title="Vortschritt" name="BanchmarkProgress" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
