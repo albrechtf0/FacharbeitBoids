@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Handler : MonoBehaviour
 {
@@ -18,7 +19,18 @@ public class Handler : MonoBehaviour
 	/// </summary>
 	public Calculator calc;
 
-    void Update()
+	private void OnEnable()
+	{
+		var uiDocument = GetComponent<UIDocument>();
+		var root = uiDocument.rootVisualElement;
+		Button RunSinglethreadedButton = root.Query<Button>("RunSinglethreaded");
+		RunSinglethreadedButton.RegisterCallback<ClickEvent>();
+		Button RunMultiProcessedButton = root.Query<Button>("RunMultiProcessed");
+		Button RunShaderButton = root.Query<Button>("RunShader");
+	}
+
+
+	void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{

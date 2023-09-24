@@ -9,15 +9,15 @@
         <ui:GroupBox text="Ausführen" name="RunBox" style="align-items: stretch;">
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start;">
                 <ui:Button text="Singelthreaded" display-tooltip-when-elided="true" name="RunSinglethreaded" />
-                <ui:Label tabindex="-1" text="Letzte Laufzeit: " display-tooltip-when-elided="true" name="LastRuntime" />
+                <ui:LongField label="Letzte Laufzeit:" value="0" name="SinglethreadedLastRuntime" readonly="true" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start;">
                 <ui:Button text="Multiprocessed" display-tooltip-when-elided="true" name="RunMultiProcessed" style="font-size: 15px;" />
-                <ui:Label tabindex="-1" text="Letzte Laufzeit: " display-tooltip-when-elided="true" name="LastRuntime" />
+                <ui:LongField label="Letzte Laufzeit:" value="0" name="MultiprocessedLastRuntime" readonly="true" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
                 <ui:Button text="Shader" display-tooltip-when-elided="true" name="RunShader" style="font-size: 15px;" />
-                <ui:Label tabindex="-1" text="Letzte Laufzeit: " display-tooltip-when-elided="true" name="LastRuntime" />
+                <ui:LongField label="Letzte Laufzeit:" value="0" name="ShaderLastRuntime" readonly="true" />
             </ui:VisualElement>
         </ui:GroupBox>
         <ui:VisualElement name="Benchmark" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); display: flex; visibility: visible; align-items: stretch;">
@@ -25,6 +25,7 @@
             <ui:UnsignedIntegerField label="Durchläufe" value="1" name="RunsInput" />
             <ui:Button text="Benchmark starten" display-tooltip-when-elided="true" name="RunBechmarkButton" style="white-space: nowrap;" />
             <ui:ProgressBar value="22" title="Vortschritt" name="BanchmarkProgress" />
+            <ui:LongField label="Letzte Laufzeit:" value="0" name="BenchmarkLastRuntime" readonly="true" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
