@@ -12,10 +12,6 @@ using UnityEngine;
 [System.Serializable]
 public class Calculator
 {
-	/// <summary>
-	/// How often to repeat the calculation
-	/// </summary>
-	public int loops;
     /// <summary>
     /// The shader used for multiplying
     /// </summary>
@@ -26,8 +22,9 @@ public class Calculator
 	/// A Function calculating <paramref name="amount"/> <see cref="int"/>s./>
 	/// </summary>
 	/// <param name="amount">The amount of <see cref="int"/>s to calculate.</param>
+	/// <param name="loops">How often a single calculation is repeated</param>
 	/// <returns>Returnes the time the calculation took. Does not include generating the values.</returns>
-	public long calculateSingelThreaded(int amount)
+	public long calculateSingelThreaded(int amount, int loops)
     {
         int[] numbers = new int[amount];
         for(int i = 0; i < amount; i++)
@@ -52,8 +49,9 @@ public class Calculator
 	/// A Function calculating <paramref name="amount"/> <see cref="int"/>s./>
 	/// </summary>
 	/// <param name="amount">The amount of <see cref="int"/>s to calculate.</param>
+	/// <param name="loops">How often a single calculation is repeated</param>
 	/// <returns>Returnes the time the calculation took. Does not include generating the values.</returns>
-	public long calculateMultiprocessed(int amount)
+	public long calculateMultiprocessed(int amount, int loops)
     {
 		NativeArray<int> numbers = new NativeArray<int>(amount,Allocator.TempJob);
 		for (int i = 0; i < amount; i++)
@@ -94,8 +92,9 @@ public class Calculator
 	/// A Function calculating <paramref name="amount"/> <see cref="int"/>s./>
 	/// </summary>
 	/// <param name="amount">The amount of <see cref="int"/>s to calculate.</param>
+	/// <param name="loops">How often a single calculation is repeated</param>
 	/// <returns>Returnes the time the calculation took. Does not include generating the values.</returns>
-	public long calculateParallelShader(int amount)
+	public long calculateParallelShader(int amount, int loops)
     {
         int[] numbers = new int[amount];
 		for (int i = 0; i < amount; i++)
