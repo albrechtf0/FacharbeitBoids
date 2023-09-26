@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ParallelisationExample/Parallelisation Example.unity
     guid: 893e2afde9919464e87d6d47e12aef66
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 1cab12fd02f17f6448d54222fd606b2e,
+      type: 2}
