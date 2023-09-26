@@ -3,29 +3,27 @@
     <ui:VisualElement name="Background" data-source="ParallelisationUiHandler" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.61);">
         <ui:Label tabindex="-1" text="Parallelisierungsbeispiel" display-tooltip-when-elided="true" name="Title" class="title" />
         <ui:Foldout text="Einstellungen" name="SettingsFoldout" value="true">
-            <ui:UnsignedIntegerField label="Anzahl" value="100000" name="AmountInput" />
-            <ui:UnsignedIntegerField label="Wiederholungen" value="1000" name="LoopsInput" />
+            <ui:UnsignedIntegerField label="Anzahl" value="100" name="AmountInput" />
+            <ui:UnsignedIntegerField label="Wiederholungen" value="100" name="LoopsInput" />
         </ui:Foldout>
-        <ui:GroupBox text="Ausführen" name="RunBox" style="align-items: stretch;">
+        <ui:Foldout text="Ausführen" name="RunFoldout">
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start;">
                 <ui:Button text="Singelthreaded" display-tooltip-when-elided="true" name="RunSinglethreaded" />
-                <ui:LongField label="Letzte Laufzeit:" value="0" name="SinglethreadedLastRuntime" readonly="true" />
+                <ui:LongField label="Letzte Laufzeit [ms]:" value="0" name="SinglethreadedLastRuntime" readonly="true" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: flex-start;">
                 <ui:Button text="Multiprocessed" display-tooltip-when-elided="true" name="RunMultiProcessed" style="font-size: 15px;" />
-                <ui:LongField label="Letzte Laufzeit:" value="0" name="MultiprocessedLastRuntime" readonly="true" />
+                <ui:LongField label="Letzte Laufzeit [ms]:" value="0" name="MultiprocessedLastRuntime" readonly="true" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
                 <ui:Button text="Shader" display-tooltip-when-elided="true" name="RunShader" style="font-size: 15px;" />
-                <ui:LongField label="Letzte Laufzeit:" value="0" name="ShaderLastRuntime" readonly="true" />
+                <ui:LongField label="Letzte Laufzeit [ms]:" value="0" name="ShaderLastRuntime" readonly="true" />
             </ui:VisualElement>
-        </ui:GroupBox>
-        <ui:VisualElement name="Benchmark" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); display: flex; visibility: visible; align-items: stretch;">
-            <ui:Label tabindex="-1" text="Benchmark" display-tooltip-when-elided="true" name="BenchmarkTitle" class="headline" />
-            <ui:UnsignedIntegerField label="Durchläufe" value="1" name="RunsInput" />
+        </ui:Foldout>
+        <ui:Foldout text="Benchmark" name="BechmarkFoldout">
+            <ui:UnsignedIntegerField label="Durchläufe" value="100" name="RunsInput" />
             <ui:Button text="Benchmark starten" display-tooltip-when-elided="true" name="RunBechmarkButton" style="white-space: nowrap;" />
             <ui:ProgressBar value="0" title="Fortschritt" name="BenchmarkProgress" />
-            <ui:LongField label="Letzte Laufzeit:" value="0" name="BenchmarkLastRuntime" readonly="true" />
-        </ui:VisualElement>
+        </ui:Foldout>
     </ui:VisualElement>
 </ui:UXML>

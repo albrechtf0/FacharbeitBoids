@@ -30,6 +30,7 @@ public class Handler : MonoBehaviour
 	private LongField SinglethreadedRuntimeField;
 	private LongField MultiprocessedRuntimeField;
 	private LongField ShaderRuntimeField;
+	private UnsignedIntegerField AmountInput;
 
 	private void OnEnable()
 	{
@@ -44,12 +45,15 @@ public class Handler : MonoBehaviour
 		Button RunBenchmarkButton = root.Query<Button>("RunBechmarkButton");
 		RunBenchmarkButton.RegisterCallback<ClickEvent>(runBenchmark);
 
-		UnsignedIntegerField AmountInput = root.Query<UnsignedIntegerField>("AmountInput");
+		AmountInput = root.Query<UnsignedIntegerField>("AmountInput");
 		AmountInput.RegisterValueChangedCallback(updateAmount);
+		amount = (int)AmountInput.value;
 		UnsignedIntegerField LoopsInput = root.Query<UnsignedIntegerField>("LoopsInput");
 		LoopsInput.RegisterValueChangedCallback(updateLoops);
+		loops = (int)LoopsInput.value;
 		UnsignedIntegerField RunsInput = root.Query<UnsignedIntegerField>("RunsInput");
 		RunsInput.RegisterValueChangedCallback(updateRuns);
+		runs = (int)RunsInput.value;
 
 		BenchmarkProgressBar = root.Query<ProgressBar>("BenchmarkProgress");
 		SinglethreadedRuntimeField = root.Query<LongField>("SinglethreadedLastRuntime");
@@ -75,7 +79,15 @@ public class Handler : MonoBehaviour
 	}
 	void updateAmount(ChangeEvent<uint> change)
 	{
-		amount = (int)change.newValue;
+		if(change.newValue <= 65535*64)
+		{
+			amount = (int)change.newValue;
+		}
+		else
+		{
+			amount = 65535 * 64;
+			AmountInput.value = (uint)amount;
+		}
 	}
 	void updateLoops(ChangeEvent<uint> change)
 	{
@@ -107,6 +119,7 @@ public class Handler : MonoBehaviour
 				file.WriteLine($"{timeSingle[i]};{timeMulti[i]};{timeShader[i]}");
 			}
 		}
+		BenchmarkProgressBar.value = 0;
 		yield return null;
 	}
 }
