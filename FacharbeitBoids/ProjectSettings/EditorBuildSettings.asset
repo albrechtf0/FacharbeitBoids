@@ -6,11 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
+    path: Assets/MainMenue/StartScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/ParallelisationExample/Parallelisation Example.unity
     guid: 893e2afde9919464e87d6d47e12aef66
+  - enabled: 1
+    path: Assets/BoidSimulation/BoidSimulation.unity
+    guid: 075262036d4392144a5120ed05f6f112
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 1cab12fd02f17f6448d54222fd606b2e,
       type: 2}
