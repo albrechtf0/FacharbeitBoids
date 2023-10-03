@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class CameraControler : MonoBehaviour
 {
-	public InputControles input;
+	private InputControles input;
 	public Camera cam;
 	public Cinemachine.CinemachineVirtualCameraBase[] virtualCameras;
 	private int currentCamera;

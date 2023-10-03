@@ -82,6 +82,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Vertical"",
+                    ""type"": ""Value"",
+                    ""id"": ""83a09a4f-5b79-424a-a347-c4ddf3f076c0"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -381,6 +390,72 @@ namespace UnityEngine.InputSystem
                     ""action"": ""Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""00e3146c-a113-4269-9f28-ec4499d39773"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d088a4f8-afd8-4dd3-88cc-ad8154fe2802"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c9b65e39-8741-43c1-9d3d-502d38745076"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""c1e5dc36-271e-4c8a-b597-34987c0e3578"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""d88db05e-f1bd-4dfe-83e2-494027372892"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""74f67b7f-ff67-4f8e-9de9-65dc3097c839"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -972,6 +1047,7 @@ namespace UnityEngine.InputSystem
             m_Player_Click = m_Player.FindAction("Click", throwIfNotFound: true);
             m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
             m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
+            m_Player_Vertical = m_Player.FindAction("Vertical", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1051,6 +1127,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_Click;
         private readonly InputAction m_Player_Point;
         private readonly InputAction m_Player_Camera;
+        private readonly InputAction m_Player_Vertical;
         public struct PlayerActions
         {
             private @InputControles m_Wrapper;
@@ -1061,6 +1138,7 @@ namespace UnityEngine.InputSystem
             public InputAction @Click => m_Wrapper.m_Player_Click;
             public InputAction @Point => m_Wrapper.m_Player_Point;
             public InputAction @Camera => m_Wrapper.m_Player_Camera;
+            public InputAction @Vertical => m_Wrapper.m_Player_Vertical;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1088,6 +1166,9 @@ namespace UnityEngine.InputSystem
                 @Camera.started += instance.OnCamera;
                 @Camera.performed += instance.OnCamera;
                 @Camera.canceled += instance.OnCamera;
+                @Vertical.started += instance.OnVertical;
+                @Vertical.performed += instance.OnVertical;
+                @Vertical.canceled += instance.OnVertical;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1110,6 +1191,9 @@ namespace UnityEngine.InputSystem
                 @Camera.started -= instance.OnCamera;
                 @Camera.performed -= instance.OnCamera;
                 @Camera.canceled -= instance.OnCamera;
+                @Vertical.started -= instance.OnVertical;
+                @Vertical.performed -= instance.OnVertical;
+                @Vertical.canceled -= instance.OnVertical;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1298,6 +1382,7 @@ namespace UnityEngine.InputSystem
             void OnClick(InputAction.CallbackContext context);
             void OnPoint(InputAction.CallbackContext context);
             void OnCamera(InputAction.CallbackContext context);
+            void OnVertical(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {
