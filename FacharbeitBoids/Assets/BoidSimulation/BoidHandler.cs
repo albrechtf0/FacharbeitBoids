@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoidHandler : MonoBehaviour
 {
 	public float Lookradius;
 	public float AvoidanceRadius;
+	public float ObjektAvoidanceStrength;
 	private Vector3 dampeneing;
 	void Update()
 	{
@@ -36,7 +38,12 @@ public class BoidHandler : MonoBehaviour
 			{
 				tooClose++;
 				Vector3 closestPoint = col.ClosestPoint(transform.position);
-				avoidance += (transform.position - closestPoint).normalized * (Lookradius / (transform.position - closestPoint).magnitude);
+				Vector3 relPos = closestPoint - transform.position; //From self to Closest point
+				avoidance += (closestPoint + (2 * (Vector3.Project(relPos, transform.forward) - closestPoint))).normalized * //Get target vector Mirrored relpos at foreward
+					(
+					Mathf.Max(-Mathf.Sqrt(((ObjektAvoidanceStrength*ObjektAvoidanceStrength)/AvoidanceRadius)*(transform.position-closestPoint).magnitude)+AvoidanceRadius,0)
+					+ (Mathf.Abs(Vector3.Angle(transform.forward, (transform.position - closestPoint))/90)-1)
+					);
 			}
 		}
 		Vector3 ResDirection = Vector3.zero;
@@ -68,6 +75,7 @@ public class BoidHandler : MonoBehaviour
 		Vector3 direction = transform.forward;
 		Vector3 avoidance = Vector3.zero;
 		int visible = 0;
+		int tooClose = 0;
 		foreach (Collider col in Cols)
 		{
 			if (col.gameObject.tag == "Boid")
@@ -92,20 +100,40 @@ public class BoidHandler : MonoBehaviour
 			}
 			else
 			{
+				tooClose++;
 				Vector3 closestPoint = col.ClosestPoint(transform.position);
-				avoidance += (transform.position - closestPoint).normalized * (Lookradius / (transform.position - closestPoint).magnitude);
-				Gizmos.color = Color.red;
-				Gizmos.DrawRay(transform.position, (transform.position - closestPoint).normalized * (Lookradius / (transform.position - closestPoint).magnitude));
+				Vector3 relPos = closestPoint - transform.position; //From self to Closest point
+				avoidance += (closestPoint + (2 * (Vector3.Project(relPos, transform.forward) - closestPoint))).normalized * //Get target vector Mirrored relpos at foreward
+					(
+					Mathf.Max(-Mathf.Sqrt(((ObjektAvoidanceStrength * ObjektAvoidanceStrength) / AvoidanceRadius) * (transform.position - closestPoint).magnitude) + AvoidanceRadius,0)
+					+ (Mathf.Abs(Vector3.Angle(transform.forward, (transform.position - closestPoint)) / 90) - 1)
+					);
+				Gizmos.color = Color.red;// Obstacle avoidance
+				Gizmos.DrawRay(transform.position, (closestPoint + (2 * (Vector3.Project(relPos, transform.forward) - closestPoint))).normalized * //Get target vector Mirrored relpos at foreward
+					(
+					Mathf.Max(-Mathf.Sqrt(((ObjektAvoidanceStrength * ObjektAvoidanceStrength) / AvoidanceRadius) * (transform.position - closestPoint).magnitude) + AvoidanceRadius,0)
+					+ (Mathf.Abs(Vector3.Angle(transform.forward, (transform.position - closestPoint)) / 90) - 1)
+					));
+				Gizmos.DrawLine(transform.position, closestPoint);
 			}
 		}
 		center /= visible;
 		Debug.Log($"Visible: {visible}");
-		Vector3 ResDirection = (center - transform.position).normalized;
+		Vector3 ResDirection = Vector3.zero;
+		if (visible > 0)
+		{
+			center /= visible;
+			ResDirection += (center - transform.position).normalized;
+		}
+		if (tooClose > 0)
+		{
+			ResDirection += avoidance / tooClose;
+		}
+
 		ResDirection += direction.normalized;
-		ResDirection += avoidance;
 		Gizmos.color = Color.green;
-		Gizmos.DrawRay(transform.position, ResDirection);
+		Gizmos.DrawRay(transform.position, ResDirection);//Target direktion
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawRay(transform.position, avoidance);
+		Gizmos.DrawRay(transform.position, avoidance);//avoidance direction
 	}
 }

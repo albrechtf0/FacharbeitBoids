@@ -120,3 +120,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Lookradius: 10
   AvoidanceRadius: 4
+  ObjektAvoidanceStrength: 5
