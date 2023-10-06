@@ -39,11 +39,9 @@ public class BoidHandler : MonoBehaviour
 			{
 				Vector3 closestPoint = col.ClosestPoint(transform.position);
 				Vector3 relPos = closestPoint - transform.position; //From self to Closest point
-				ColisionAvoidance += (closestPoint + (((Vector3.Project(relPos, transform.forward) - relPos) * 2) + relPos).normalized) * //Get target vector Mirrored relpos at foreward
-					(
-					Mathf.Max(-Mathf.Sqrt(((ObjektAvoidanceStrength*ObjektAvoidanceStrength)/AvoidanceRadius)*(transform.position-closestPoint).magnitude)+AvoidanceRadius,0)
-					+ (Mathf.Max((Vector3.Angle(transform.forward, relPos)/90)-1,0))
-					);
+				Vector3 target = Vector3.Cross(Vector3.Cross(relPos, transform.forward), relPos).normalized;
+				ColisionAvoidance += target;
+				ColisionAvoidance += -relPos * Mathf.Max(((-1 / Mathf.Pow(AvoidanceRadius,2)) * Mathf.Pow(relPos.magnitude, 2) + 1)*ObjektAvoidanceStrength, 0);
 			}
 		}
 		Vector3 ResDirection = Vector3.zero;
@@ -103,18 +101,10 @@ public class BoidHandler : MonoBehaviour
 			{
 				Vector3 closestPoint = col.ClosestPoint(transform.position);
 				Vector3 relPos = closestPoint - transform.position; //From self to Closest point
-				ColisionAvoidance += (closestPoint + (((Vector3.Project(relPos, transform.forward) - relPos) * 2) + relPos).normalized) * //Get target vector Mirrored relpos at foreward
-					(
-					Mathf.Max(-Mathf.Sqrt(((ObjektAvoidanceStrength * ObjektAvoidanceStrength) / AvoidanceRadius) * (transform.position - closestPoint).magnitude) + AvoidanceRadius, 0)
-					+ (Mathf.Max((Vector3.Angle(transform.forward, relPos) / 90) - 1, 0))
-					);
-				Gizmos.color = Color.red;// Obstacle avoidance
-				Gizmos.DrawRay(transform.position, (((Vector3.Project(relPos, transform.forward) - relPos) * 2) + relPos).normalized * //Get target vector Mirrored relpos at foreward
-					(
-					Mathf.Max(-Mathf.Sqrt(((ObjektAvoidanceStrength * ObjektAvoidanceStrength) / AvoidanceRadius) * (transform.position - closestPoint).magnitude) + AvoidanceRadius,0)
-					+ (Mathf.Max((-Vector3.Angle(transform.forward, relPos) / 90) + 1,0))
-					));
-				//Debug.Log(((Vector3.Project(relPos, transform.forward) - relPos) * 2)+relPos);
+				Vector3 target = Vector3.Cross(Vector3.Cross(relPos, transform.forward), relPos).normalized;
+				ColisionAvoidance += target;
+				Gizmos.color = Color.red;
+				Gizmos.DrawRay(transform.position, target);
 				Gizmos.color = Color.black;
 				Gizmos.DrawLine(transform.position, closestPoint);
 			}
@@ -140,6 +130,6 @@ public class BoidHandler : MonoBehaviour
 		Gizmos.color = Color.gray;
 		Gizmos.DrawRay(transform.position, avoidance);//avoidance direction
 		Gizmos.color = Color.yellow;
-		Gizmos.DrawRay (transform.position, ColisionAvoidance);// Colision avoidance direction
+		Gizmos.DrawRay(transform.position, ColisionAvoidance);// Colision avoidance direction
 	}
 }
