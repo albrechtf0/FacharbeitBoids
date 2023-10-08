@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
-using static UnityEditor.ShaderData;
 
 public class UiHander : MonoBehaviour
 {
@@ -21,16 +21,27 @@ public class UiHander : MonoBehaviour
         SimMultiProcessed.RegisterCallback<ClickEvent>(LoadSimMultiProcessed);
 		Button SimShader = root.Query<Button>("SimShader");
 		SimShader.RegisterCallback<ClickEvent>(LoadSimShader);
+		Button ExitButton = root.Query<Button>("ExitButton");
+		ExitButton.RegisterCallback<ClickEvent>(ExitGame);
+	}
+
+	private void ExitGame(ClickEvent evt)
+	{
+#if UNITY_EDITOR
+		EditorApplication.ExitPlaymode();
+#else
+		Application.Quit();
+#endif
 	}
 
 	private void LoadSimShader(ClickEvent evt)
 	{
-		SceneManager.LoadScene("BoidSimulation");
+		SceneManager.LoadScene("BoidSimulationShader");
 	}
 
 	private void LoadSimMultiProcessed(ClickEvent evt)
 	{
-		SceneManager.LoadScene("BoidSimulation");
+		SceneManager.LoadScene("BoidSimulationJobSystem");
 	}
 
 	private void LoadSimSingleThreaded(ClickEvent evt)

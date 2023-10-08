@@ -1,6 +1,9 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UIStyle.uss?fileID=7433441132597879392&amp;guid=562547de5e4d6824ea4447c775f46f6e&amp;type=3#UIStyle" />
+    <Style src="project://database/Assets/Shared/UIStyle.uss?fileID=7433441132597879392&amp;guid=562547de5e4d6824ea4447c775f46f6e&amp;type=3#UIStyle" />
     <ui:VisualElement name="Background" data-source="ParallelisationUiHandler" style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.61);">
+        <ui:VisualElement style="flex-grow: 0; flex-direction: row;">
+            <ui:Button text="Zurück" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" />
+        </ui:VisualElement>
         <ui:Label tabindex="-1" text="Parallelisierungsbeispiel" display-tooltip-when-elided="true" name="Title" class="title" />
         <ui:Foldout text="Einstellungen" name="SettingsFoldout" value="true">
             <ui:UnsignedIntegerField label="Anzahl" value="100" name="AmountInput" />

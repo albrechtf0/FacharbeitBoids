@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -5,6 +6,7 @@ using System.IO;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Handler : MonoBehaviour
@@ -58,6 +60,14 @@ public class Handler : MonoBehaviour
 		SinglethreadedRuntimeField = root.Query<LongField>("SinglethreadedLastRuntime");
 		MultiprocessedRuntimeField = root.Query<LongField>("MultiprocessedLastRuntime");
 		ShaderRuntimeField = root.Query<LongField>("ShaderLastRuntime");
+
+		Button ExitButton = root.Query<Button>("ExitButton");
+		ExitButton.RegisterCallback<ClickEvent>(ExitClick);
+	}
+
+	private void ExitClick(ClickEvent evt)
+	{
+		SceneManager.LoadScene("StartScene");
 	}
 
 	void runSinglethreaded(ClickEvent click)
