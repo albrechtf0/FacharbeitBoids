@@ -118,6 +118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38d770d71a18b14aba120057340918b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Lookradius: 10
+  LookRadius: 10
   AvoidanceRadius: 4
+  Speed: 1
+  MaxTurningSpeed: 1000
+  TurningTime: 1
+  DirectionStrength: 1
+  CohesionStrength: 1
+  AvoidanceStrenght: 1
   ObjektAvoidanceStrength: 5
