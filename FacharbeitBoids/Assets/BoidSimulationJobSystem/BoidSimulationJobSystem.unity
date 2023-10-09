@@ -2268,9 +2268,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d08426037cecc246b004a9dfa0222d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boid: {fileID: 0}
-  BoidCount: 0
-  Space: {x: 0, y: 0, z: 0}
+  Boid: {fileID: 8252134217153331454, guid: 471243ce5e328be48a9afbbfa3b57119, type: 3}
+  BoidCount: 20
+  Space: {x: 80, y: 80, z: 80}
+  LookRadius: 1
+  AvoidanceRadius: 1
+  Speed: 1
+  MaxTurningSpeed: 1
+  TurningTime: 1
+  DirectionStrength: 1
+  CohesionStrength: 1
+  AvoidanceStrenght: 1
+  ObjektAvoidanceStrength: 1
+  OverlapMaxHits: 20
 --- !u!1 &1799734109
 GameObject:
   m_ObjectHideFlags: 0
