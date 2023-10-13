@@ -896,6 +896,87 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
+--- !u!1 &563767038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 563767040}
+  - component: {fileID: 563767039}
+  m_Layer: 0
+  m_Name: BoidHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &563767039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563767038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d82e574e4247274a927ed906f772b6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  count: 80
+  BoidShader: {fileID: 7200000, guid: c3d9ae465c7d19d42ad7fd9d8a48a90c, type: 3}
+  boidMesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  boidMaterial: {fileID: 2100000, guid: 8f976c821444f6a4ebb736728a0d5caf, type: 2}
+  SpownRange:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 40, y: 40, z: 40}
+  BoidRadius: 1
+  LookRadius: 20
+  AvoidanceRadius: 5
+  Speed: 1
+  DirectionStrength: 1
+  CohesionStrength: 1
+  AvoidanceStrenght: 1
+  ObjektAvoidanceStrength: 5
+  planes:
+  - vertecie1: {x: -50, y: 0, z: 0}
+    vertecie2: {x: -50, y: 1, z: 0}
+    vertecie3: {x: -50, y: 0, z: 1}
+  - vertecie1: {x: 50, y: 0, z: 0}
+    vertecie2: {x: 50, y: 1, z: 0}
+    vertecie3: {x: 50, y: 0, z: 1}
+  - vertecie1: {x: 0, y: -50, z: 0}
+    vertecie2: {x: 1, y: -50, z: 0}
+    vertecie3: {x: 0, y: -50, z: 1}
+  - vertecie1: {x: 0, y: 50, z: 0}
+    vertecie2: {x: 1, y: 50, z: 0}
+    vertecie3: {x: 0, y: 50, z: 1}
+  - vertecie1: {x: 0, y: 0, z: -50}
+    vertecie2: {x: 1, y: 0, z: -50}
+    vertecie3: {x: 0, y: 1, z: -50}
+  - vertecie1: {x: 0, y: 0, z: 50}
+    vertecie2: {x: 1, y: 0, z: 50}
+    vertecie3: {x: 0, y: 1, z: 50}
+  spheres:
+  - position: {x: 0, y: 0, z: 0}
+    radius: 1
+--- !u!4 &563767040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 563767038}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &594034923
 GameObject:
   m_ObjectHideFlags: 0
@@ -3190,3 +3271,4 @@ SceneRoots:
   - {fileID: 500873399}
   - {fileID: 2055837313}
   - {fileID: 896676842}
+  - {fileID: 563767040}

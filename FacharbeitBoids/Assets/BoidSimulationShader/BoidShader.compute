@@ -1,0 +1,178 @@
+// Each #kernel tells which function to compile; you can have many kernels
+#pragma kernel CSMain
+
+//datatypes
+struct Boid
+{
+    float3 position;
+    float3 forward;
+};
+
+struct Plane
+{
+    float3 vertecie1;
+    float3 vertecie2;
+    float3 vertecie3;
+};
+
+struct Sphere
+{
+    float3 position;
+    float radius;
+};
+
+//data
+RWStructuredBuffer<Boid> Boids;
+RWStructuredBuffer<float4x4> InstanceData;
+int BoidCount;
+StructuredBuffer<Plane> Planes;
+int planeCount;
+StructuredBuffer<Sphere> Spheres;
+int sphereCount;
+
+float BoidRadius;
+float LookRadius;
+float AvoidanceRadius;
+float Speed;
+float DirectionStrength;
+float CohesionStrength;
+float AvoidanceStrenght;
+float ObjektAvoidanceStrength;
+
+float deltaTime;
+
+//Functions
+
+float distanceRay(float3 startPos, float3 direction, float3 position)
+{
+    float3 relpos = position - startPos;
+    float3 crossProduct = cross(relpos, direction);
+    return length(crossProduct) / length(direction);
+}
+
+
+bool RaycastBoid(float3 position, float3 direction, Boid boid)
+{
+    return distanceRay(position, direction, boid.position) <= BoidRadius;
+}
+
+bool RaycastHitsBoid(float3 position, float3 direction, Boid target)
+{
+    float dist = distance(position, target.position);
+    for (int i = 0; i < BoidCount; i++)
+    {
+        if (RaycastBoid(position, direction, Boids[i]))
+        {
+            if (distance(Boids[i].position, position) < dist) // catch behind target
+            {
+                if (distance(target.position, Boids[i].position) <= dist) // Catch other side
+                {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+float distancePlane(float3 position, Plane plane)
+{
+    float3 crossProduct = cross(plane.vertecie2 - plane.vertecie1, plane.vertecie3 - plane.vertecie1);
+    return dot(crossProduct, position - plane.vertecie1) / length(crossProduct);
+}
+
+float3 ClosestPointPlane(float3 position, Plane plane)
+{
+    float3 crossProduct = cross(plane.vertecie2 - plane.vertecie1, plane.vertecie3 - plane.vertecie1);
+    float distance = dot(crossProduct, position - plane.vertecie1) / length(crossProduct);
+    return position - distance * normalize(crossProduct);
+}
+
+float3 ClosestPointSphere(float3 position, Sphere sphere)
+{
+    float3 relpos = position - sphere.position;
+	relpos = normalize(relpos) * sphere.radius;
+	return sphere.position + relpos;
+		}
+
+[numthreads(8, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float3 center = float3(0,0,0);
+    float3 direction = Boids[id.x].forward;
+    float3 avoidance = float3(0,0,0);
+    float3 ColisionAvoidance = float3(0,0,0);
+    int visible = 0;
+    int tooClose = 0;
+    Boid self = Boids[id.x];
+    for (int boid = 0; boid < BoidCount; boid++)
+    {
+        Boid other = Boids[boid];
+        if ( distance(self.position, other.position) <= LookRadius)
+        {
+            if (RaycastHitsBoid(self.position, other.position - self.position, other))
+            {
+                float dist = distance(other.position, self.position);
+                if (dist == 0)//Catching for self
+                {
+                    continue;
+                }
+                visible++;
+                center += other.position;
+                direction += other.forward;
+                if (dist < AvoidanceRadius)
+                {
+                    tooClose++;
+                    avoidance += -normalize(other.position - self.position) * (AvoidanceRadius / dist);
+                }
+            }
+        }
+
+    }
+    for (int plane = 0; plane < planeCount; plane++)
+    {
+        if (distancePlane(self.position, Planes[plane]) <= LookRadius)
+        {
+            float3 closestPoint = ClosestPointPlane(self.position, Planes[plane]);
+            float3 relPos = closestPoint - self.position; //From self to Closest point
+            float3 target = normalize(cross(cross(relPos, self.forward), relPos));
+            ColisionAvoidance += target * clamp((-1 / (LookRadius - AvoidanceRadius)) * (length(relPos) - LookRadius), 0, 1);
+            ColisionAvoidance += -relPos * max(((-1 / (float) pow(AvoidanceRadius, 2)) * length(relPos) * length(relPos) + 1) * ObjektAvoidanceStrength, 0);
+        }
+    }
+    for (int sphere = 0; sphere < sphereCount; sphere++)
+    {
+        if (distance(self.position, Spheres[sphere].position) <= LookRadius + Spheres[sphere].radius)
+        {
+            float3 closestPoint = ClosestPointSphere(self.position, Spheres[sphere]);
+            float3 relPos = closestPoint - self.position; //From self to Closest point
+            float3 target = normalize(cross(cross(relPos, self.forward), relPos));
+            ColisionAvoidance += target * clamp((-1 / (LookRadius - AvoidanceRadius)) * (length(relPos) - LookRadius), 0, 1);
+            ColisionAvoidance += -relPos * max(((-1 / pow(AvoidanceRadius, 2)) * length(relPos) * length(relPos) + 1) * ObjektAvoidanceStrength, 0);
+        }
+    }
+
+    float3 ResDirection = float3(0,0,0);
+    if (visible > 0)
+    {
+        center /= visible;
+        ResDirection += normalize(center - self.position) * CohesionStrength;
+    }
+    if (tooClose > 0)
+    {
+        ResDirection += (avoidance / tooClose) * AvoidanceStrenght;
+    }
+    ResDirection += ColisionAvoidance;
+
+    ResDirection += normalize(direction) * DirectionStrength;
+
+    Boids[id.x].forward = normalize(ResDirection);
+    Boids[id.x].position += Boids[id.x].forward * Speed * deltaTime;
+    InstanceData[id.x] = 
+    float4x4(
+    float4(1, 0, 0, Boids[id.x].position.x), 
+    float4(0, 1, 0, Boids[id.x].position.y), 
+    float4(0, 0, 1, Boids[id.x].position.z), 
+    float4(0, 0, 0, 1));
+}
+

@@ -167,7 +167,6 @@ namespace ShaderPrebuild
 			Vector3 cross = Vector3.Cross(plane.vertecies[1] - plane.vertecies[0], plane.vertecies[2] - plane.vertecies[0]);
 			float distance = Vector3.Dot(cross, point - plane.vertecies[0]) / cross.Length();
 			return point - distance * Vector3.Normalize(cross);
-
 		}
 
 		public Vector3 ClosestPointSphere(Vector3 point, Sphere sphere)
