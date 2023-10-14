@@ -7,12 +7,13 @@ public class CameraControler : MonoBehaviour
 {
 	private InputControles input;
 	public Camera cam;
+	public bool allowFolowCam = true;
 	public Cinemachine.CinemachineVirtualCameraBase[] virtualCameras;
 	private int currentCamera;
 
 	private void Update()
 	{
-		if (input.Player.Click.WasPressedThisFrame())
+		if (input.Player.Click.WasPressedThisFrame() && allowFolowCam)
 		{
 			Ray ray = cam.ScreenPointToRay(input.Player.Point.ReadValue<Vector2>());
 			RaycastHit hit;
