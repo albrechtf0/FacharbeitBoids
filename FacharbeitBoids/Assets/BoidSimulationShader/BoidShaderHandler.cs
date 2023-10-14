@@ -11,7 +11,6 @@ public class BoidShaderHandler : MonoBehaviour
 	public Mesh boidMesh;
 	public Material boidMaterial;
 	public Bounds SpownRange;
-	public float BoidRadius;
 	public float LookRadius;
 	public float AvoidanceRadius;
 	public float Speed;
@@ -19,6 +18,7 @@ public class BoidShaderHandler : MonoBehaviour
 	public float CohesionStrength;
 	public float AvoidanceStrenght;
 	public float ObjektAvoidanceStrength;
+	public Vector3 lerpFactor;
 	public DataContainer.Plane[] planes;
 	public Sphere[] spheres;
 
@@ -45,7 +45,7 @@ public class BoidShaderHandler : MonoBehaviour
 					Random.Range(SpownRange.min.x, SpownRange.max.x),
 					Random.Range(SpownRange.min.y, SpownRange.max.y),
 					Random.Range(SpownRange.min.z, SpownRange.max.z)),
-				new Vector3(Random.value,Random.value,Random.value).normalized);
+				new Vector3(Random.value-0.5f,Random.value-0.5f,Random.value-0.5f).normalized);
 		}
 
 		BoidBuffer = new ComputeBuffer(count,sizeof(float)*6);
@@ -67,7 +67,6 @@ public class BoidShaderHandler : MonoBehaviour
 		BoidShader.SetBuffer(0, "Spheres", spheresBuffer);
 		BoidShader.SetInt("sphereCount", spheres.Length);
 
-		BoidShader.SetFloat("BoidRadius", BoidRadius);
 		BoidShader.SetFloat("LookRadius",LookRadius);
 		BoidShader.SetFloat("AvoidanceRadius",AvoidanceRadius);
 		BoidShader.SetFloat("Speed",Speed);
@@ -75,11 +74,15 @@ public class BoidShaderHandler : MonoBehaviour
 		BoidShader.SetFloat("CohesionStrength",CohesionStrength);
 		BoidShader.SetFloat("AvoidanceStrenght",AvoidanceStrenght);
 		BoidShader.SetFloat("ObjektAvoidanceStrength",ObjektAvoidanceStrength);
+		BoidShader.SetVector("lerpFactor",lerpFactor);
 }
 	private void Update()
 	{
 		BoidShader.SetFloat("deltaTime", Time.deltaTime);
 		BoidShader.Dispatch(0, count / 8, 1, 1);
+		Boid[] boiarr = new Boid[count];
+		BoidBuffer.GetData(boiarr);
+
 		
 		InstanceDataBuffer.GetData(InstanceData);
 		Graphics.RenderMeshInstanced(renderParams, boidMesh, 0, InstanceData);
@@ -91,5 +94,20 @@ public class BoidShaderHandler : MonoBehaviour
 		InstanceDataBuffer.Dispose();
 		planesBuffer.Dispose();
 		spheresBuffer.Dispose();
+	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.color = Color.yellow;
+		foreach(DataContainer.Plane plane in planes)
+		{
+			Gizmos.DrawLine(plane.vertecie1, plane.vertecie2);
+			Gizmos.DrawLine(plane.vertecie1, plane.vertecie3);
+			Gizmos.DrawLine(plane.vertecie2, plane.vertecie3);
+		}
+		foreach(Sphere sphere in spheres)
+		{
+			Gizmos.DrawSphere(sphere.position, sphere.radius);
+		}
 	}
 }
