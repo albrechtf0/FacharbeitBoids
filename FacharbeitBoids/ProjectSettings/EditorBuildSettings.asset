@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/BoidSimulation/BoidSimulation.unity
     guid: 075262036d4392144a5120ed05f6f112
   - enabled: 1
-    path: Assets/BoidSimulationJobSystem/BoidSimulationJobSystem.unity
-    guid: d84c3040b94265748af87dd75d56d207
-  - enabled: 1
     path: Assets/BoidSimulationShader/BoidSimulationShader.unity
     guid: 601edbf552316d642a9f655e2a74d3d2
   m_configObjects:

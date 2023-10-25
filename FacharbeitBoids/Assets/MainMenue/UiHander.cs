@@ -17,8 +17,6 @@ public class UiHander : MonoBehaviour
         ParallelExample.RegisterCallback<ClickEvent>(LoadParallelExample);
         Button SimSingleThreaded = root.Query<Button>("SimSingleThreaded");
         SimSingleThreaded.RegisterCallback<ClickEvent>(LoadSimSingleThreaded);
-        Button SimMultiProcessed = root.Query<Button>("SimMultiProcessed");
-        SimMultiProcessed.RegisterCallback<ClickEvent>(LoadSimMultiProcessed);
 		Button SimShader = root.Query<Button>("SimShader");
 		SimShader.RegisterCallback<ClickEvent>(LoadSimShader);
 		Button ExitButton = root.Query<Button>("ExitButton");
@@ -37,11 +35,6 @@ public class UiHander : MonoBehaviour
 	private void LoadSimShader(ClickEvent evt)
 	{
 		SceneManager.LoadScene("BoidSimulationShader");
-	}
-
-	private void LoadSimMultiProcessed(ClickEvent evt)
-	{
-		SceneManager.LoadScene("BoidSimulationJobSystem");
 	}
 
 	private void LoadSimSingleThreaded(ClickEvent evt)
