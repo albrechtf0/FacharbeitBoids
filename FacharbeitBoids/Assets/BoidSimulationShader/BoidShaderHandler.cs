@@ -36,9 +36,6 @@ public class BoidShaderHandler : MonoBehaviour
 	{
 		renderParams = new RenderParams(boidMaterial);
 
-		BoidBuffer = new ComputeBuffer(count,sizeof(float)*6);
-		InstanceDataBuffer = new ComputeBuffer(count,sizeof(float)*16);
-
 		setBoidCount(count);
 
 		planesBuffer = new ComputeBuffer(planes.Length, sizeof(float) * 9);
@@ -97,6 +94,7 @@ public class BoidShaderHandler : MonoBehaviour
 
 	public void setBoidCount(int count)
 	{
+		this.count = count;
 		Boid[] boids = new Boid[count];
 		for (int i = 0; i < count; i++)
 		{
@@ -107,10 +105,12 @@ public class BoidShaderHandler : MonoBehaviour
 					Random.Range(SpownRange.min.z, SpownRange.max.z)),
 				new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f).normalized);
 		}
+		BoidBuffer = new ComputeBuffer(count, sizeof(float) * 6);
 		BoidBuffer.SetData(boids);
 		BoidShader.SetBuffer(0, "Boids", BoidBuffer);
 		BoidShader.SetFloat("BoidCount", boids.Length);
 
+		InstanceDataBuffer = new ComputeBuffer(count, sizeof(float) * 16);
 		BoidShader.SetBuffer(0, "InstanceData", InstanceDataBuffer);
 		InstanceData = new Matrix4x4[count];
 	}
