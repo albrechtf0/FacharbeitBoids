@@ -1,8 +1,26 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Shared/UIStyle.uss?fileID=7433441132597879392&amp;guid=562547de5e4d6824ea4447c775f46f6e&amp;type=3#UIStyle" />
     <ui:VisualElement name="root" style="flex-grow: 1;">
-        <ui:VisualElement style="flex-grow: 0; flex-direction: row;">
+        <ui:VisualElement name="HeadLine" style="flex-grow: 0; flex-direction: row;">
             <ui:Button text="Zurück" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" />
+            <ui:Label tabindex="-1" text="Boid Simulation CPU" parse-escape-sequences="true" display-tooltip-when-elided="true" class="headline" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); min-width: auto; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+            <ui:Foldout text="Boid Einstellungen" value="true" focusable="false">
+                <ui:VisualElement style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.5); padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+                    <ui:UnsignedIntegerField label="Boid Anzahl" value="50" name="BoidCount" />
+                    <ui:FloatField label="Sichtweite&#10;" value="10" name="LookRadius" />
+                    <ui:FloatField label="Ausweichradius" value="4" name="AvoidanceRadius" />
+                    <ui:FloatField label="Geschwindigkeit" value="1" name="Speed" />
+                    <ui:FloatField label="Maximale Drehgeschwindigkeit" value="1000" name="MaxTurningSpeed" />
+                    <ui:FloatField label="Drehzeit&#10;" value="1" name="TurningTime" />
+                    <ui:Label tabindex="-1" text="Regelstärken" parse-escape-sequences="true" display-tooltip-when-elided="true" class="headline" />
+                    <ui:FloatField label="Bewegungsrichtung" value="1" name="DirectionStrength" />
+                    <ui:FloatField label="Zusammenhalt" value="1" name="CohesionStrength" />
+                    <ui:FloatField label="Ausweichen" value="1" name="AvoidanceStrength" />
+                    <ui:FloatField label="Hindernis Ausweichen" value="1" name="ObjectAvoidanceStrength" />
+                </ui:VisualElement>
+            </ui:Foldout>
         </ui:VisualElement>
     </ui:VisualElement>
-    <ui:VisualElement style="flex-grow: 1;" />
 </ui:UXML>

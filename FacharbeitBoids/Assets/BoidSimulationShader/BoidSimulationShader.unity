@@ -926,7 +926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d82e574e4247274a927ed906f772b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: 2400
+  count: 100
   BoidShader: {fileID: 7200000, guid: c3d9ae465c7d19d42ad7fd9d8a48a90c, type: 3}
   boidMesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
   boidMaterial: {fileID: 2100000, guid: 8f976c821444f6a4ebb736728a0d5caf, type: 2}
@@ -938,7 +938,7 @@ MonoBehaviour:
   Speed: 1
   DirectionStrength: 1
   CohesionStrength: 1
-  AvoidanceStrenght: 2
+  AvoidanceStrength: 0
   ObjektAvoidanceStrength: 5
   lerpFactor: {x: 0.8, y: 0.8, z: 0.8}
   planes:
@@ -2663,6 +2663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 1891831912}
+  boidShaderHandler: {fileID: 563767039}
 --- !u!114 &1891831912
 MonoBehaviour:
   m_ObjectHideFlags: 0

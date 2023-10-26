@@ -519,6 +519,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 369819812}
+  allowFolowCam: 1
   virtualCameras:
   - {fileID: 500873398}
   - {fileID: 2055837312}
@@ -1723,6 +1724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 1246049849}
+  boidGroupHandler: {fileID: 1751101292}
 --- !u!114 &1246049849
 MonoBehaviour:
   m_ObjectHideFlags: 0

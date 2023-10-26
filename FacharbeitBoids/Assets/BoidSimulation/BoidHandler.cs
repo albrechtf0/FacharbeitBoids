@@ -10,7 +10,7 @@ public class BoidHandler : MonoBehaviour
 	public float TurningTime;
 	public float DirectionStrength;
 	public float CohesionStrength;
-	public float AvoidanceStrenght;
+	public float AvoidanceStrength;
 	public float ObjektAvoidanceStrength;
 	private Vector3 dampeneing;
 	void Update()
@@ -58,7 +58,7 @@ public class BoidHandler : MonoBehaviour
 		}
 		if (tooClose > 0)
 		{
-			ResDirection += (avoidance / tooClose) *AvoidanceStrenght;
+			ResDirection += (avoidance / tooClose) *AvoidanceStrength;
 		}
 		ResDirection += ColisionAvoidance;
 
@@ -126,7 +126,7 @@ public class BoidHandler : MonoBehaviour
 		}
 		if (tooClose > 0)
 		{
-			ResDirection += (avoidance / tooClose)*AvoidanceStrenght;
+			ResDirection += (avoidance / tooClose)*AvoidanceStrength;
 		}
 		ResDirection += ColisionAvoidance;
 

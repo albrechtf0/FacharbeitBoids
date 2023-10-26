@@ -325,14 +325,58 @@
                 },
                 {
                     "name": "",
-                    "id": "0e8b750a-878c-40f4-bb59-b1a3cc9e72e9",
-                    "path": "*/{PrimaryAction}",
+                    "id": "a65f6bd8-63cf-4388-b065-53b9313625bf",
+                    "path": "<Gamepad>/{PrimaryAction}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard&Mouse;Gamepad;Touch;Joystick;XR",
+                    "groups": "Gamepad",
                     "action": "Click",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "086f2c98-6687-46ba-921b-f6e85936cb46",
+                    "path": "<Joystick>/{PrimaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "MouseClick",
+                    "id": "d73b8caf-5b47-4364-8c10-d3ed7b466abf",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "607d0613-9432-4e79-bdf7-38bda8b7c247",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "cec2d18d-01e7-4f9b-a098-7055bd9c5841",
+                    "path": "<Mouse>/{PrimaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",

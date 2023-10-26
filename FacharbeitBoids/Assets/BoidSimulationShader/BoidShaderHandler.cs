@@ -16,7 +16,7 @@ public class BoidShaderHandler : MonoBehaviour
 	public float Speed;
 	public float DirectionStrength;
 	public float CohesionStrength;
-	public float AvoidanceStrenght;
+	public float AvoidanceStrength;
 	public float ObjektAvoidanceStrength;
 	public Vector3 lerpFactor;
 	public DataContainer.Plane[] planes;
@@ -36,26 +36,10 @@ public class BoidShaderHandler : MonoBehaviour
 	{
 		renderParams = new RenderParams(boidMaterial);
 
-
-		Boid[] boids = new Boid[count];
-		for (int i = 0; i < count; i++)
-		{
-			boids[i] = new Boid(
-				new Vector3(
-					Random.Range(SpownRange.min.x, SpownRange.max.x),
-					Random.Range(SpownRange.min.y, SpownRange.max.y),
-					Random.Range(SpownRange.min.z, SpownRange.max.z)),
-				new Vector3(Random.value-0.5f,Random.value-0.5f,Random.value-0.5f).normalized);
-		}
-
 		BoidBuffer = new ComputeBuffer(count,sizeof(float)*6);
-		BoidBuffer.SetData(boids);
-		BoidShader.SetBuffer(0, "Boids", BoidBuffer);
-		BoidShader.SetFloat("BoidCount", boids.Length);
-
 		InstanceDataBuffer = new ComputeBuffer(count,sizeof(float)*16);
-		BoidShader.SetBuffer(0, "InstanceData", InstanceDataBuffer);
-		InstanceData = new Matrix4x4[count];
+
+		setBoidCount(count);
 
 		planesBuffer = new ComputeBuffer(planes.Length, sizeof(float) * 9);
 		planesBuffer.SetData(planes);
@@ -72,7 +56,7 @@ public class BoidShaderHandler : MonoBehaviour
 		BoidShader.SetFloat("Speed",Speed);
 		BoidShader.SetFloat("DirectionStrength",DirectionStrength);
 		BoidShader.SetFloat("CohesionStrength",CohesionStrength);
-		BoidShader.SetFloat("AvoidanceStrenght",AvoidanceStrenght);
+		BoidShader.SetFloat("AvoidanceStrenght",AvoidanceStrength);
 		BoidShader.SetFloat("ObjektAvoidanceStrength",ObjektAvoidanceStrength);
 		BoidShader.SetVector("lerpFactor",lerpFactor);
 }
@@ -109,5 +93,65 @@ public class BoidShaderHandler : MonoBehaviour
 		{
 			Gizmos.DrawSphere(sphere.position, sphere.radius);
 		}
+	}
+
+	public void setBoidCount(int count)
+	{
+		Boid[] boids = new Boid[count];
+		for (int i = 0; i < count; i++)
+		{
+			boids[i] = new Boid(
+				new Vector3(
+					Random.Range(SpownRange.min.x, SpownRange.max.x),
+					Random.Range(SpownRange.min.y, SpownRange.max.y),
+					Random.Range(SpownRange.min.z, SpownRange.max.z)),
+				new Vector3(Random.value - 0.5f, Random.value - 0.5f, Random.value - 0.5f).normalized);
+		}
+		BoidBuffer.SetData(boids);
+		BoidShader.SetBuffer(0, "Boids", BoidBuffer);
+		BoidShader.SetFloat("BoidCount", boids.Length);
+
+		BoidShader.SetBuffer(0, "InstanceData", InstanceDataBuffer);
+		InstanceData = new Matrix4x4[count];
+	}
+	public void setBoidLookRadius(float radius)
+	{
+		LookRadius = radius;
+		BoidShader.SetFloat("LookRadius",radius);
+	}
+	public void setBoidAvoidanceRadius(float radius)
+	{
+		AvoidanceRadius = radius;
+		BoidShader.SetFloat("AvoidanceRadius",radius);
+	}
+	public void setBoidSpeed(float speed)
+	{
+		this.Speed = speed;
+		BoidShader.SetFloat("Speed",speed);
+	}
+	public void setBoidDirectionStrength(float strength)
+	{
+		DirectionStrength = strength;
+		BoidShader.SetFloat("DirectionStrength",strength);
+	}
+	public void setBoidCohesionStrength(float strength)
+	{
+		CohesionStrength = strength;
+		BoidShader.SetFloat("CohesionStrength",strength);
+	}
+	public void setBoidAvoidanceStrength(float strength)
+	{
+		AvoidanceStrength = strength;
+		BoidShader.SetFloat("AvoidanceStrenght",strength);
+	}
+	public void setBoidObjectAvoidanceStrength(float strength)
+	{
+		ObjektAvoidanceStrength = strength;
+		BoidShader.SetFloat("ObjektAvoidanceStrength",strength);
+	}
+	public void setBoidLerpFactor(Vector3 factor)
+	{
+		lerpFactor = factor;
+		BoidShader.SetVector("lerpFactor",factor);
 	}
 }

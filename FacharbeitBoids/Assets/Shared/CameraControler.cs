@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class CameraControler : MonoBehaviour
@@ -25,6 +26,7 @@ public class CameraControler : MonoBehaviour
 				virtualCameras[currentCamera].Priority = 0;
 				currentCamera = 1;
 			}
+			
 		}
 		if (input.Player.Camera.WasPressedThisFrame())
 		{
