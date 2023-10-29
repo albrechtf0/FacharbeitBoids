@@ -1,12 +1,17 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Shared/UIStyle.uss?fileID=7433441132597879392&amp;guid=562547de5e4d6824ea4447c775f46f6e&amp;type=3#UIStyle" />
     <ui:VisualElement name="root" style="flex-grow: 1;">
-        <ui:VisualElement name="HeadLine" style="flex-grow: 0; flex-direction: row;">
-            <ui:Button text="Zurück" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" />
-            <ui:Button text="Benchmark starten" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BechmarkButton" />
-            <ui:Label tabindex="-1" text="Boid Simulation CPU" parse-escape-sequences="true" display-tooltip-when-elided="true" class="headline" />
+        <ui:VisualElement name="Headline" style="flex-grow: 0; flex-direction: row;">
+            <ui:VisualElement name="HeadLineLeft" style="flex-grow: 0; flex-direction: row;">
+                <ui:Button text="Zurück" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" />
+                <ui:Button text="Benchmark starten" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BechmarkButton" />
+                <ui:Label tabindex="-1" text="Boid Simulation CPU" parse-escape-sequences="true" display-tooltip-when-elided="true" class="headline" />
+            </ui:VisualElement>
+            <ui:VisualElement name="HeadlineRight" style="flex-grow: 1; flex-direction: row-reverse;">
+                <ui:FloatField label="FPS:" value="42,2" name="FPSCounter" readonly="true" style="justify-content: center;" />
+            </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); min-width: auto; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+        <ui:VisualElement name="Configs" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); min-width: auto; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
             <ui:Foldout text="Einstellungen" value="true" focusable="false">
                 <ui:VisualElement style="flex-grow: 1; background-color: rgba(255, 255, 255, 0.5); padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
                     <ui:FloatField label="Benchmark Laufzeit[s]" value="300" name="BenchmarkTime" readonly="false" />

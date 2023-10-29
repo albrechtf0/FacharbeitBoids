@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,17 +14,18 @@ public class BoidSimulationShaderUiHandler : MonoBehaviour
 	private FloatField LookRadius;
 	private FloatField AvoidanceRadius;
 	private FloatField Speed;
-	private Vector3Field LerpFactor; 
+	private Vector3Field LerpFactor;
 	private FloatField DirectionStrength;
 	private FloatField CohesionStrength;
 	private FloatField AvoidanceStrength;
 	private FloatField ObjectAvoidanceStrength;
 	private Button BechmarkButton;
 	private FloatField BenchmarkTimeField;
+	public FloatField FPSCounter;
 
 	void Start()
 	{
-		var root = ui.rootVisualElement;
+		VisualElement root = ui.rootVisualElement;
 		Button ExitButton = root.Query<Button>("ExitButton");
 		ExitButton.RegisterCallback<ClickEvent>(ExitGame);
 		BoidCount = root.Query<UnsignedIntegerField>("BoidCount");
@@ -51,7 +50,14 @@ public class BoidSimulationShaderUiHandler : MonoBehaviour
 		BechmarkButton.RegisterCallback<ClickEvent>(StartBechmark);
 		BenchmarkTimeField = root.Query<FloatField>("BenchmarkTime");
 		BenchmarkTimeField.RegisterValueChangedCallback(BenchmarkTimeChanged);
+		FPSCounter = root.Query<FloatField>("FPSCounter");
 	}
+
+	private void Update()
+	{
+		FPSCounter.value = Mathf.Round(1f / Time.deltaTime);
+	}
+
 	private void BenchmarkTimeChanged(ChangeEvent<float> evt)
 	{
 		BechmarkTime = evt.newValue;

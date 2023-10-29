@@ -1,7 +1,4 @@
-using DataContainer;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,10 +22,11 @@ public class BoidSimulationUiHandler : MonoBehaviour
 	private FloatField ObjectAvoidanceStrength;
 	private Button BechmarkButton;
 	private FloatField BenchmarkTimeField;
+	private FloatField FPSCounter;
 
 	void Start()
 	{
-		var root = ui.rootVisualElement;
+		VisualElement root = ui.rootVisualElement;
 		Button ExitButton = root.Query<Button>("ExitButton");
 		ExitButton.RegisterCallback<ClickEvent>(ExitGame);
 		BoidCount = root.Query<UnsignedIntegerField>("BoidCount");
@@ -55,6 +53,12 @@ public class BoidSimulationUiHandler : MonoBehaviour
 		BechmarkButton.RegisterCallback<ClickEvent>(StartBechmark);
 		BenchmarkTimeField = root.Query<FloatField>("BenchmarkTime");
 		BenchmarkTimeField.RegisterValueChangedCallback(BenchmarkTimeChanged);
+		FPSCounter = root.Query<FloatField>("FPSCounter");
+	}
+
+	private void Update()
+	{
+		FPSCounter.value = Mathf.Round(1f / Time.deltaTime);
 	}
 
 	private void BenchmarkTimeChanged(ChangeEvent<float> evt)
@@ -137,7 +141,7 @@ public class BoidSimulationUiHandler : MonoBehaviour
 		BechmarkButton.SetEnabled(false);
 		Debug.Log("StartingBenchmark");
 		float Runtime = 0;
-		int Frame = 0; 
+		int Frame = 0;
 		using (StreamWriter file = new StreamWriter(Path.Combine(Application.persistentDataPath, "SingleThreaded.csv")))
 		{
 			file.WriteLine("BoidCount; LookRadius; AvoidanceRadius; Speed; DirectionStrength; CohesionStrength; AvoidanceStrength; ObjektAvoidanceStrength; MaxTurningSpeed; TurningTime");
