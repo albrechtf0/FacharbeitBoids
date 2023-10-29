@@ -1,6 +1,8 @@
+using DataContainer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -9,6 +11,7 @@ public class BoidSimulationUiHandler : MonoBehaviour
 {
 	public UIDocument ui;
 	public BoidGroupHandler boidGroupHandler;
+	public float BechmarkTime = 300f;
 
 	private UnsignedIntegerField BoidCount;
 	private FloatField LookRadius;
@@ -20,6 +23,8 @@ public class BoidSimulationUiHandler : MonoBehaviour
 	private FloatField CohesionStrength;
 	private FloatField AvoidanceStrength;
 	private FloatField ObjectAvoidanceStrength;
+	private Button BechmarkButton;
+	private FloatField BenchmarkTimeField;
 
 	void Start()
 	{
@@ -46,6 +51,20 @@ public class BoidSimulationUiHandler : MonoBehaviour
 		AvoidanceStrength.RegisterValueChangedCallback(AvoidnceStrengthChanged);
 		ObjectAvoidanceStrength = root.Query<FloatField>("ObjectAvoidanceStrength");
 		ObjectAvoidanceStrength.RegisterValueChangedCallback(ObjectAvoidanceStrengthChanged);
+		BechmarkButton = root.Query<Button>("BechmarkButton");
+		BechmarkButton.RegisterCallback<ClickEvent>(StartBechmark);
+		BenchmarkTimeField = root.Query<FloatField>("BenchmarkTime");
+		BenchmarkTimeField.RegisterValueChangedCallback(BenchmarkTimeChanged);
+	}
+
+	private void BenchmarkTimeChanged(ChangeEvent<float> evt)
+	{
+		BechmarkTime = evt.newValue;
+	}
+
+	private void StartBechmark(ClickEvent evt)
+	{
+		StartCoroutine(bechmark());
 	}
 
 	private void ObjectAvoidanceStrengthChanged(ChangeEvent<float> evt)
@@ -112,5 +131,29 @@ public class BoidSimulationUiHandler : MonoBehaviour
 	{
 		SceneManager.LoadScene("StartScene");
 	}
-	
+
+	IEnumerator bechmark()
+	{
+		BechmarkButton.SetEnabled(false);
+		Debug.Log("StartingBenchmark");
+		float Runtime = 0;
+		int Frame = 0; 
+		using (StreamWriter file = new StreamWriter(Path.Combine(Application.persistentDataPath, "SingleThreaded.csv")))
+		{
+			file.WriteLine("BoidCount; LookRadius; AvoidanceRadius; Speed; DirectionStrength; CohesionStrength; AvoidanceStrength; ObjektAvoidanceStrength; MaxTurningSpeed; TurningTime");
+			BoidHandler boid = GameObject.FindGameObjectWithTag("Boid").GetComponent<BoidHandler>();
+			file.WriteLine($"{boidGroupHandler.BoidCount}; {boid.LookRadius}; {boid.AvoidanceRadius}; {boid.Speed}; {boid.DirectionStrength}; {boid.CohesionStrength}; {boid.AvoidanceStrength}; {boid.ObjektAvoidanceStrength}; {boid.MaxTurningSpeed}; {boid.TurningTime}");
+			file.WriteLine("PassedTime; Frame; FPS; FrameTimes");
+			while (Runtime < BechmarkTime)
+			{
+				Runtime += Time.deltaTime;
+				Frame++;
+				file.WriteLine($"{Runtime}; {Frame}; {1f / Time.deltaTime}; {Time.deltaTime}");
+				yield return null;
+			}
+		}
+		yield return null;
+		Debug.Log("Ending Benchmark");
+		BechmarkButton.SetEnabled(true);
+	}
 }

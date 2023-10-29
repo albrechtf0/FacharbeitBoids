@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -9,6 +10,7 @@ public class BoidSimulationShaderUiHandler : MonoBehaviour
 {
 	public UIDocument ui;
 	public BoidShaderHandler boidShaderHandler;
+	public float BechmarkTime = 300f;
 
 	private UnsignedIntegerField BoidCount;
 	private FloatField LookRadius;
@@ -19,6 +21,8 @@ public class BoidSimulationShaderUiHandler : MonoBehaviour
 	private FloatField CohesionStrength;
 	private FloatField AvoidanceStrength;
 	private FloatField ObjectAvoidanceStrength;
+	private Button BechmarkButton;
+	private FloatField BenchmarkTimeField;
 
 	void Start()
 	{
@@ -43,8 +47,20 @@ public class BoidSimulationShaderUiHandler : MonoBehaviour
 		AvoidanceStrength.RegisterValueChangedCallback(AvoidnceStrengthChanged);
 		ObjectAvoidanceStrength = root.Query<FloatField>("ObjectAvoidanceStrength");
 		ObjectAvoidanceStrength.RegisterValueChangedCallback(ObjectAvoidanceStrengthChanged);
+		BechmarkButton = root.Query<Button>("BechmarkButton");
+		BechmarkButton.RegisterCallback<ClickEvent>(StartBechmark);
+		BenchmarkTimeField = root.Query<FloatField>("BenchmarkTime");
+		BenchmarkTimeField.RegisterValueChangedCallback(BenchmarkTimeChanged);
+	}
+	private void BenchmarkTimeChanged(ChangeEvent<float> evt)
+	{
+		BechmarkTime = evt.newValue;
 	}
 
+	private void StartBechmark(ClickEvent evt)
+	{
+		StartCoroutine(bechmark());
+	}
 	private void LerpFactorChanged(ChangeEvent<Vector3> evt)
 	{
 		boidShaderHandler.setBoidLerpFactor(evt.newValue);
@@ -95,4 +111,27 @@ public class BoidSimulationShaderUiHandler : MonoBehaviour
 		SceneManager.LoadScene("StartScene");
 	}
 
+	IEnumerator bechmark()
+	{
+		BechmarkButton.SetEnabled(false);
+		Debug.Log("StartingBenchmark");
+		float Runtime = 0;
+		int Frame = 0;
+		using (StreamWriter file = new StreamWriter(Path.Combine(Application.persistentDataPath, "Shader.csv")))
+		{
+			file.WriteLine("BoidCount; LookRadius; AvoidanceRadius; Speed; DirectionStrength; CohesionStrength; AvoidanceStrength; ObjektAvoidanceStrength; lerpFactor");
+			file.WriteLine($"{boidShaderHandler.count}; {boidShaderHandler.LookRadius}; {boidShaderHandler.AvoidanceRadius}; {boidShaderHandler.Speed}; {boidShaderHandler.DirectionStrength}; {boidShaderHandler.CohesionStrength}; {boidShaderHandler.AvoidanceStrength}; {boidShaderHandler.ObjektAvoidanceStrength}; {boidShaderHandler.lerpFactor}");
+			file.WriteLine("PassedTime; Frame; FPS; FrameTimes");
+			while (Runtime < BechmarkTime)
+			{
+				Runtime += Time.deltaTime;
+				Frame++;
+				file.WriteLine($"{Runtime}; {Frame}; {1f / Time.deltaTime}; {Time.deltaTime}");
+				yield return null;
+			}
+		}
+		yield return null;
+		Debug.Log("Ending Benchmark");
+		BechmarkButton.SetEnabled(true);
+	}
 }
