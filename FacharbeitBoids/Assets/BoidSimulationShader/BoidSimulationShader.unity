@@ -938,7 +938,7 @@ MonoBehaviour:
   Speed: 1
   DirectionStrength: 1
   CohesionStrength: 1
-  AvoidanceStrength: 0
+  AvoidanceStrength: 1
   ObjektAvoidanceStrength: 5
   lerpFactor: {x: 0.8, y: 0.8, z: 0.8}
   planes:
@@ -2664,6 +2664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 1891831912}
   boidShaderHandler: {fileID: 563767039}
+  BechmarkTime: 300
 --- !u!114 &1891831912
 MonoBehaviour:
   m_ObjectHideFlags: 0

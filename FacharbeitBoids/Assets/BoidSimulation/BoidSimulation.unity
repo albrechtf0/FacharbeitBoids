@@ -2393,7 +2393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Boid: {fileID: 7799079304016517583, guid: 078a0666e075bfc42875249b04699515, type: 3}
-  BoidCount: 100
+  BoidCount: 50
   Space: {x: 80, y: 80, z: 80}
 --- !u!1 &1799734109
 GameObject:

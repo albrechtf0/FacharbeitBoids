@@ -25,7 +25,7 @@
                     <ui:FloatField label="Bewegungsrichtung" value="1" name="DirectionStrength" />
                     <ui:FloatField label="Zusammenhalt" value="1" name="CohesionStrength" />
                     <ui:FloatField label="Ausweichen" value="1" name="AvoidanceStrength" />
-                    <ui:FloatField label="Hindernis Ausweichen" value="1" name="ObjectAvoidanceStrength" />
+                    <ui:FloatField label="Hindernis Ausweichen" value="5" name="ObjectAvoidanceStrength" />
                 </ui:VisualElement>
             </ui:Foldout>
         </ui:VisualElement>

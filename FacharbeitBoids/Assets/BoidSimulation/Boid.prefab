@@ -125,5 +125,5 @@ MonoBehaviour:
   TurningTime: 1
   DirectionStrength: 1
   CohesionStrength: 1
-  AvoidanceStrength: 0
+  AvoidanceStrength: 1
   ObjektAvoidanceStrength: 5

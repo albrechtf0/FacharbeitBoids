@@ -15,6 +15,7 @@ public class BoidGroupHandler : MonoBehaviour
 
 	public void CreateBoids(int count)
 	{
+		BoidCount += count;
 		for (int i = 0; i < count; i++)
 		{
 			GameObject.Instantiate(Boid, new Vector3(Random.Range(-Space.x / 2, Space.x / 2), Random.Range(-Space.y / 2, Space.y / 2), Random.Range(-Space.z / 2, Space.z / 2)), Random.rotation);
@@ -22,6 +23,7 @@ public class BoidGroupHandler : MonoBehaviour
 	}
 	public void ClearBoids()
 	{
+		BoidCount = 0;
 		var Boids = GameObject.FindGameObjectsWithTag("Boid");
 		foreach (var Boid in Boids)
 		{

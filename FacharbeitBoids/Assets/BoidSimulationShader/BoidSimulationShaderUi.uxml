@@ -5,7 +5,7 @@
             <ui:VisualElement name="HeadLineLeft" style="flex-grow: 0; flex-direction: row;">
                 <ui:Button text="Zurück" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" />
                 <ui:Button text="Benchmark starten" parse-escape-sequences="true" display-tooltip-when-elided="true" name="BechmarkButton" />
-                <ui:Label tabindex="-1" text="Boid Simulation CPU" parse-escape-sequences="true" display-tooltip-when-elided="true" class="headline" />
+                <ui:Label tabindex="-1" text="Boid Simulation GPU" parse-escape-sequences="true" display-tooltip-when-elided="true" class="headline" />
             </ui:VisualElement>
             <ui:VisualElement name="HeadlineRight" style="flex-grow: 0; flex-direction: row-reverse; justify-content: flex-end;">
                 <ui:FloatField label="FPS:" value="42,2" name="FPSCounter" readonly="true" />
@@ -24,7 +24,7 @@
                     <ui:FloatField label="Bewegungsrichtung" value="1" name="DirectionStrength" />
                     <ui:FloatField label="Zusammenhalt" value="1" name="CohesionStrength" />
                     <ui:FloatField label="Ausweichen" value="1" name="AvoidanceStrength" />
-                    <ui:FloatField label="Hindernis Ausweichen" value="1" name="ObjectAvoidanceStrength" />
+                    <ui:FloatField label="Hindernis Ausweichen" value="5" name="ObjectAvoidanceStrength" />
                 </ui:VisualElement>
             </ui:Foldout>
         </ui:VisualElement>
