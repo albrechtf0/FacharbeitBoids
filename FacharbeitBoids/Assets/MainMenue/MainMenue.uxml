@@ -6,6 +6,5 @@
         <ui:Button text="Schwarmsimulation Singlethreaded" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SimSingleThreaded" />
         <ui:Button text="Schwarmsimulation GPU" parse-escape-sequences="true" display-tooltip-when-elided="true" name="SimShader" />
         <ui:Button text="Beenden" parse-escape-sequences="true" display-tooltip-when-elided="true" name="ExitButton" />
-        <ui:Label tabindex="-1" text="Warnung: &#10;Die Simulationen und Tests können sehr recourcenfordernd sein. Deshalb sollten keine zu anfordendenn Einstellungen getroffen werden. Es ist empholen die Einstellungen in kleinen Schritten an die Leistung des Systems angepasst zu erhöhen. Werden zu fordende Einstellungen getroffen kann es zu abstürzen oder dem nicht Reagieren des Programmes oder Systemes kommen." parse-escape-sequences="true" display-tooltip-when-elided="true" style="text-overflow: clip; white-space: normal;" />
     </ui:VisualElement>
 </ui:UXML>
